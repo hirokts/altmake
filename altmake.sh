@@ -1,7 +1,7 @@
 #!/bin/bash
 
 DIR=$(pwd)
-SHADIR=$(echo $DIR | shasum -a 256 | sed "s/  -//")
+SHADIR=$(echo $DIR | shasum -a 256 | sed "s/  -//")-${DIR##*/}
 TASK=${1:-default}
 
 if [ $TASK = "--help" ] || [ $TASK = "default" -a ! -f  ~/.altmake/$SHADIR/default.sh ];then
