@@ -1,4 +1,5 @@
 #!/bin/bash
+set -eu
 
 DIR=$(pwd)
 SHADIR=$(echo $DIR | shasum -a 256 | sed "s/  -//")-${DIR##*/}
