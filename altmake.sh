@@ -60,5 +60,12 @@ if [ $TASK = "ls" ];then
     exit 0
 fi
 
+if [ ! -e  ~/.altmake/$SHADIR/$TASK.sh ]; then
+    echo "No such commands for the current directory. Available commands are..."
+    echo
+    command ls ~/.altmake/$SHADIR/ | sed "s/\.sh//"
+    exit 1
+fi
+
 PARAMS=$(echo $@ | sed "s/$1//g")
 command sh ~/.altmake/$SHADIR/$TASK.sh $PARAMS
