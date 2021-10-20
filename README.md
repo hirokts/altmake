@@ -1,17 +1,14 @@
 # altmake
-altmake works like `make` commands for the current directory.
+Makeコマンドを代替するユーティリティ
 
 #### 説明
 - `make` コマンドの代替として、シェルスクリプトを実行する
-- すでにあるMakefileを変更せず、カレントディレクトリにはファイルも作らない
-- 作業ディレクトリでよく使うコマンド群をシェルスクリプトとして記述し、そのディレクトリに紐付けたaltmakeコマンドとして登録
-
-作業ディレクトリで繰り返し実行しているシェルコマンド群を `altmake ${command}` という形でパーソナルに実行できるようにすることを想定しています。  
+- 作業ディレクトリ(カレントディレクトリ)にはファイルを作らない
+- 作業ディレクトリでよく使うコマンド群をそのディレクトリからのみ呼び出せるaltmakeコマンドとして登録
 
 #### 注意点
 - コマンドは登録したディレクトリでしか実行できない
 - 保存するシェルスクリプトの実体は `~/.altmake` ディレクトリに存在
-- コマンド編集時、VSCodeが `code` コマンドとしてインストールされているとVSCodeで開き、それ以外の場合はviで開く
 
 #### 使用例
 「dockerコンテナを停止・削除し、 再作成後にdbのマイグレーションも行う」という処理を `db_init` というコマンドとして登録して実行する場合
@@ -20,7 +17,7 @@ altmake works like `make` commands for the current directory.
 ```
 $ altmake edit db_init
 ```
-2. `vscode` で `db_init.sh` が開かれるので、編集して保存する （作業ディレクトリには保存されません)
+2. `db_init.sh` が編集状態で開かれるので、編集して保存する （ `~/.altmake/` 以下にある特定ディレクトリに保存)
 ```bash
 # db_init
 docker stop local-postgres
@@ -47,18 +44,20 @@ $ rm -r ~/.altmake
 ```
 
 #### Usage
-```
-altmake [command] [<options>]
-    Executes ~/.altmake/${hashed-currentdir}/${command}.sh with options.
-altmake ls
-    Print list of commands for the current directory.
-altmake edit [command]
-    Edit ~/.altmake/${hashed-currentdir}/${command}.sh with VSCode.
-altmake rm [command]
-    Remove  ~/.altmake/${hashed-currentdir}/${command}.sh
-altmake --help
-    Print this
-```
+- `altmake [command] [<options>]`  
+登録されているコマンドを実行
+
+- `altmake ls`  
+作業ディレクトリで実行できるコマンドの一覧を表示
+
+- `altmake cat_all`  
+作業ディレクトリで実行できるコマンドの実体となるシェルスクリプトを全表示
+
+- `altmake edit [command]`  
+コマンドを編集。VSCodeがある場合はVSCodeが起動する
+
+- `altmake rm [command]`  
+コマンドを削除
 
 #### Tips
 ```bash
