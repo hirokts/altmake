@@ -2,7 +2,7 @@
 set -eu
 
 DIR=$(pwd)
-SHADIR=$(echo $DIR | shasum -a 256 | sed "s/  -//")-${DIR##*/}
+SHADIR=$(echo $DIR | shasum -a 256 | sed "s/  -//")
 TASK=${1:-default}
 
 if [ $TASK = "--help" ] || [ $TASK = "default" -a ! -f  ~/.altmake/$SHADIR/default.sh ];then
@@ -11,9 +11,11 @@ $(basename ${0}) works like make commands for the current directory.
 
 Usage:
 $(basename ${0}) [command] [<options>]
-    Executes ~/.altmake/\${hashed-currentdir}/\${command}.sh with options.
+    Execute ~/.altmake/\${hashed-currentdir}/\${command}.sh with options.
 $(basename ${0}) ls
     Print list of commands for the current directory.
+$(basename ${0}) cat_all
+    Print shellscripts of the commands with detail codes.
 $(basename ${0}) edit [command]
     Edit ~/.altmake/\${hashed-currentdir}/\${command}.sh with VSCode.
 $(basename ${0}) rm [command]
@@ -57,6 +59,11 @@ fi
 
 if [ $TASK = "ls" ];then
     command ls ~/.altmake/$SHADIR/ | sed "s/\.sh//"
+    exit 0
+fi
+
+if [ $TASK = "cat_all" ];then
+    command find ~/.altmake/$SHADIR/ -type f -print -exec sh -c ' echo -------------;cat {}; echo \\n\\n' \; | sed 's!^.*.altmake.*/!!'
     exit 0
 fi
 
