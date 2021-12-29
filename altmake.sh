@@ -74,5 +74,5 @@ if [ ! -e  ~/.altmake/$SHADIR/$TASK.sh ]; then
     exit 1
 fi
 
-PARAMS=$(echo $@ | sed "s/$1//g")
+PARAMS=$(echo $@ | sed "s/$1 //g")
 command sh ~/.altmake/$SHADIR/$TASK.sh $PARAMS
