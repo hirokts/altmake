@@ -64,3 +64,5 @@ $ rm -r ~/.altmake
 docker-compose exec my_service python manage.py $@
 ```
 というように `$@` を末尾につけたコマンドを登録することで、 `altmake my_manage test my_app.tests` というようにパラメータをそのまま渡せます。
+
+aaa
